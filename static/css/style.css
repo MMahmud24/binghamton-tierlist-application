@@ -1,0 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #005A43; /* BU Green */
+    color: white;
+    padding: 1rem;
+}
+
+main {
+    padding: 2rem;
+}
