@@ -13,3 +13,72 @@ header {
 main {
     padding: 2rem;
 }
+
+.tier_row{
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    height: 150px;
+    width: 95%;
+    border: 2px solid black;
+}
+
+.tier_label{
+    font-size: 20px;
+    width: 15%;
+    height: 100%;
+    text-align: center;
+    border-right: 2px solid black;
+
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.dropzone{
+    width: 80%;
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+#tier_S{
+    background-color: salmon;
+}
+#tier_A{
+    background-color: rgb(249, 185, 111);
+}
+#tier_B{
+    background-color: rgb(255, 241, 147);
+}
+#tier_C{
+    background-color: rgb(255, 255, 128);
+}
+#tier_D{
+    background-color: rgb(180, 238, 144);
+}
+#tier_F{
+    background-color: lightgreen;
+}
+
+#item_pool {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.draggable_item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    margin: 1px;
+
+
+    width: 100px;
+    height: 100px;
+}
