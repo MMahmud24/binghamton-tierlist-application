@@ -15,6 +15,53 @@ main {
 }
 
 
+/* navbar css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #005A43;
+    padding: 1rem 2rem;
+}
+
+.nav-left h1 {
+    margin: 0;
+    color: white;
+    font-size: 1.6rem;
+}
+
+.nav-right {
+    display: flex;
+    gap: 12px;
+}
+
+/* Buttons */
+.nav-btn {
+    padding: 8px 14px;
+    border: 1px solid white;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.nav-btn:hover {
+    background-color: white;
+    color: #005A43;
+}
+
+.nav-btn.signup {
+    background-color: white;
+    color: #005A43;
+}
+
+.nav-btn.signup:hover {
+    background-color: #e0e0e0;
+}
+
+
+
 /* create page */
 
 .tier_row{
@@ -102,42 +149,83 @@ main {
 
 /* login and signup page */
 
-.wrapper{
-    width: 100%;
-    box-sizing: border-box;
+.auth-wrapper{
+    min-height: calc(100vh - 80px);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: seagreen;
+    background-color: #005A43;
+    padding: 2rem;
 }
 
-.wrapper h1 {
-    font-size: 36px;
-    text-align: center;
-    color: white;
-}
-
-.wrapper .input-box{
+.auth-card {
     width: 100%;
-    height: 50px;
-    background: white;
-    margin: 30px 0;
+    max-width: 420px;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h1 {
+    margin-bottom: 2rem;
+    text-align: center;
+    color:  #005A43;
+}
+
+.input-box{
+    margin-bottom: 1.25rem;
 }
 .input-box input{
     width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
+    padding: 12px 14px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
     outline: none;
-    border-radius: 40px;
-    font-size: 16px;
+    transition: border 0.2s ease;
 }
 
-.wrapper .remember-forgot{
-    color: white;
+.input-box input:focus {
+    border-color: #005A43;
 }
 
-.wrapper .register-link{
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.remember-forgot a {
+    color: #005A43;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #005A43;
     color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #004235;
+}
+
+
+.register-link {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.register-link a {
+    color: #005A43;
+    font-weight: 600;
 }

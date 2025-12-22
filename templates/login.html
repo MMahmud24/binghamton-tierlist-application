@@ -1,32 +1,28 @@
 {% extends "base.html"%}
 {% block content %}
-<body>
-    <div class = "wrapper">
-        <form action ="">
-        <h1> Login</h1>
-        <div class="input-box">
-            <input type="text" placeholder ="Username" required>
-        
-        </div>
-        <div class="input-box">
-            <input type="text" placeholder ="Password"required>
-        
-        </div>
+    <div class = "auth-wrapper">
+        <form class="auth-card" onsubmit="return false;">
+            <h1> Login</h1>
+                <div class="input-box">
+                    <input type="text" placeholder ="Username" required>
+                </div>
 
-        <div class="remember-forgot">
-            <label><input type = "checkbox"> Remember me</label>
-            <a href ="#"> Forgot password?</a>
-        </div>
+                <div class="input-box">
+                    <input type="text" placeholder ="Password"required>
+                </div>
 
-        <button type = "submit" class = "btn">Login</button>
-        <div class="register-link">
-            <p>Don't have an account?<a href="#"> Register</a></p>
-        </div>
-    </form>
-    </div>
-    
+                <div class="remember-forgot">
+                    <label><input type = "checkbox"> Remember me</label>
+                    <a href ="#"> Forgot password?</a>
+                </div>
+
+                <button type = "submit" class = "btn">Login</button>
+                <div class="register-link">
+                    <p>Don't have an account?<a href="/signup"> Register</a></p>
+                </div>
+        </form>
+    </div>  
 
 </div>
-</body>
 
 {% endblock %}
