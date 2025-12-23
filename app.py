@@ -1,6 +1,20 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+import json
 
 app = Flask(__name__)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tierlists.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+class TierList(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    data = db.Column(db.Text)
+
+
 
 @app.route("/")
 def index():
@@ -19,5 +33,15 @@ def signup():
     return render_template("signup.html")
 
 
+
+# @app.route("/save", methods=["POST"])
+
+
+# @app.route("/view/<int:id>", methods=["POST"])
+
+
+
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)

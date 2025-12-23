@@ -1,3 +1,14 @@
+
+
+// function updateState()
+
+
+// function saveTierList() 
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const items = document.querySelectorAll('.draggable_item');
   const dropzones = document.querySelectorAll('.dropzone');
