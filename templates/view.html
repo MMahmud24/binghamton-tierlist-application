@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Saved Tier Lists</h1>
+
+{% if tierlists %}
+    {% for tierlists in tierlists %}
+        <div class="tierlist-card">
+            <h3>{{ tierlist.title }}</h3>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No tier lists found.</p>
+{% endif %}
+
+{% endblock %}

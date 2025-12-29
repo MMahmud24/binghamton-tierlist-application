@@ -37,7 +37,14 @@ def signup():
 # @app.route("/save", methods=["POST"])
 
 
-# @app.route("/view/<int:id>", methods=["POST"])
+@app.route("/view", methods=["GET"])
+def view():
+    tierlists = get_all_tierlists()
+    return render_template("view.html", tierlists=tierlists)
+
+def get_all_tierlists():
+    return TierList.query.all()
+
 
 
 
