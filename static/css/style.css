@@ -11,45 +11,221 @@ header {
 }
 
 main {
-    
+    padding: 2rem;
 }
 
-.wrapper{
-    width: 100%;
-    box-sizing: border-box;
+
+/* navbar css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #005A43;
+    padding: 1rem 2rem;
+}
+
+.nav-left h1 {
+    margin: 0;
+    color: white;
+    font-size: 1.6rem;
+}
+
+.nav-right {
+    display: flex;
+    gap: 12px;
+}
+
+/* Buttons */
+.nav-btn {
+    padding: 8px 14px;
+    border: 1px solid white;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.nav-btn:hover {
+    background-color: white;
+    color: #005A43;
+}
+
+.nav-btn.signup {
+    background-color: white;
+    color: #005A43;
+}
+
+.nav-btn.signup:hover {
+    background-color: #e0e0e0;
+}
+
+
+
+/* create page */
+
+.tier_row{
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    height: 150px;
+    width: 95%;
+    border: 2px solid black;
+}
+
+.tier_label{
+    font-size: 20px;
+    width: 15%;
+    height: 100%;
+    text-align: center;
+    border-right: 2px solid black;
+
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.dropzone{
+    width: 80%;
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+#tier_S{
+    background-color: salmon;
+}
+#tier_A{
+    background-color: rgb(249, 185, 111);
+}
+#tier_B{
+    background-color: rgb(255, 241, 147);
+}
+#tier_C{
+    background-color: rgb(255, 255, 128);
+}
+#tier_D{
+    background-color: rgb(180, 238, 144);
+}
+#tier_F{
+    background-color: lightgreen;
+}
+
+#item_pool {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.draggable_item{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: seagreen;
+    border: 1px solid black;
+    margin: 1px;    
+
+
+    width: 100px;
+    height: 100px;
+
+    cursor: grab;
+    user-select: none;
 }
 
-.wrapper h1 {
-    font-size: 36px;
-    text-align: center;
-    color: white;
+.draggable_item:active {
+  cursor: grabbing;
 }
 
-.wrapper .input-box{
+.draggable_item.dragging {
+    opacity: 0.6;
+    transform: scale(0.98);
+    transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+
+/* login and signup page */
+
+.auth-wrapper{
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #005A43;
+    padding: 2rem;
+}
+
+.auth-card {
     width: 100%;
-    height: 50px;
-    background: white;
-    margin: 30px 0;
+    max-width: 420px;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h1 {
+    margin-bottom: 2rem;
+    text-align: center;
+    color:  #005A43;
+}
+
+.input-box{
+    margin-bottom: 1.25rem;
 }
 .input-box input{
     width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
+    padding: 12px 14px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
     outline: none;
-    border-radius: 40px;
-    font-size: 16px;
+    transition: border 0.2s ease;
 }
 
-.wrapper .remember-forgot{
-    color: white;
+.input-box input:focus {
+    border-color: #005A43;
 }
 
-.wrapper .register-link{
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.remember-forgot a {
+    color: #005A43;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #005A43;
     color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #004235;
+}
+
+
+.register-link {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.register-link a {
+    color: #005A43;
+    font-weight: 600;
 }
