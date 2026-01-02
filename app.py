@@ -47,7 +47,6 @@ def save():
     )
     db.session.add(new_list)
     db.session.commit()
-
     return jsonify({
         "message": "Tier list saved!",
         "id": new_list.id
