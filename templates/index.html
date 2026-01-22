@@ -1,8 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
-
 {% block content %}
-    <p>Welcome to the Binghamton Tier List app.</p>
-    <a href="/create">Create a Tier List</a>
+<h2>All Tier Lists</h2>
+
+{% if tierlists %}
+    <ul class="tierlist-links">
+        {% for tierlist in tierlists %}
+            <li>
+                <a href="/view/{{ tierlist.id }}">
+                    {{ tierlist.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tier lists yet. Be the first to create one!</p>
+{% endif %}
+
+<a href="/create" class="btn" style="margin-top: 1.5rem; display:inline-block;">
+    Create a Tier List
+</a>
 {% endblock %}

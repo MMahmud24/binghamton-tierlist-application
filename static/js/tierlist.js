@@ -1,18 +1,13 @@
-
-
-// function updateState()
-
-
-// function saveTierList() 
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const items = document.querySelectorAll('.draggable_item');
   const dropzones = document.querySelectorAll('.dropzone');
   const pool = document.getElementById('item_pool');
+
+  loadTierList();
+
+  document
+    .getElementById("saveBtn")
+    .addEventListener("click", saveTierList);
 
   items.forEach(item => {
     item.draggable = true;
@@ -39,3 +34,60 @@ document.addEventListener('DOMContentLoaded', () => {
   dropzones.forEach(makeDropTarget);
   if (pool) makeDropTarget(pool);
 });
+
+
+
+
+function getTierState() {
+  const tiers = ["S","A","B","C","D","F"];
+  const state = {};
+
+  tiers.forEach(t => {
+    const zone = document.getElementById(`dropzone_${t}`);
+    state[t] = Array.from(zone.children).map(el => el.id);
+  });
+
+  const pool = document.getElementById("item_pool");
+  state.POOL = Array.from(pool.children).map(el => el.id);
+
+  return state;
+}
+function saveTierList() {
+  const state = getTierState();
+
+  fetch("/save", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: "My Tier List",
+      tiers: state
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    window.location.href = `/view/${data.id}`;
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Failed to save tier list");
+  });
+}
+
+function loadTierList() {
+  const saved = localStorage.getItem("tierlist");
+  if (!saved) return;
+
+  const state = JSON.parse(saved);
+
+  Object.entries(state).forEach(([tier, items]) => {
+    const zone =
+      tier === "POOL"
+        ? document.getElementById("item_pool")
+        : document.getElementById(`dropzone_${tier}`);
+
+    items.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) zone.appendChild(el);
+    });
+  });
+}

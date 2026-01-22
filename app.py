@@ -18,7 +18,9 @@ class TierList(db.Model):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    tierlists = TierList.query.order_by(TierList.id.desc()).all()
+    
+    return render_template("index.html", tierlists=tierlists)
 
 @app.route("/create")
 def create():
@@ -34,11 +36,36 @@ def signup():
 
 
 
-# @app.route("/save", methods=["POST"])
+@app.route("/save", methods=["POST"])
+def save():
+    payload = request.get_json()
+
+    if not payload or "tiers" not in payload:
+        return jsonify({"error": "Invalid data"}), 400
+
+    tierlist = TierList(
+        title=payload.get("title", "Untitled Tier List"),
+        data=json.dumps(payload["tiers"])
+    )
+
+    db.session.add(tierlist)
+    db.session.commit()
+
+    return jsonify({"id": tierlist.id})
 
 
 # @app.route("/view/<int:id>", methods=["POST"])
 
+@app.route("/view/<int:id>")
+def view_tierlist(id):
+    tierlist = TierList.query.get_or_404(id)
+    tiers = json.loads(tierlist.data)
+
+    return render_template(
+        "view.html",
+        title=tierlist.title,
+        tiers=tiers
+    )
 
 
 if __name__ == "__main__":
