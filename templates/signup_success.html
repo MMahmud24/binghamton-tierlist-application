@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <div style="max-width:800px;margin:48px auto;padding:24px;text-align:center;">
+    <h1>Account Created</h1>
+    <p style="font-size:18px;">Welcome{% if username %}, {{ username }}{% endif %}! Your account was created successfully.</p>
+    <p style="color: #2d6b4f; font-weight:600;">You will be redirected to the login page shortly.</p>
+    <p style="margin-top:18px;"><a href="{{ redirect_url }}" class="nav-btn">Go to Login Now</a></p>
+  </div>
+
+  <script>
+    // Redirect to the provided login URL after 3 seconds
+    (function() {
+      const redirectTo = {{ redirect_url|tojson }} || '/login';
+      setTimeout(function() {
+        window.location.href = redirectTo;
+      }, 3000);
+    })();
+  </script>
+{% endblock %}
