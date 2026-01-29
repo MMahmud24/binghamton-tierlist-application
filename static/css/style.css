@@ -136,6 +136,13 @@ main {
     user-select: none;
 }
 
+.draggable_item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
 .draggable_item:active {
   cursor: grabbing;
 }
@@ -285,3 +292,4 @@ main {
 .tierlist-links a:hover {
     text-decoration: underline;
 }
+

@@ -3,11 +3,60 @@ document.addEventListener('DOMContentLoaded', () => {
   const dropzones = document.querySelectorAll('.dropzone');
   const pool = document.getElementById('item_pool');
 
+  
   loadTierList();
+
+  const addItemForm = document.getElementById("add_item");
+  let nextItemId = document.querySelectorAll('.draggable_item').length + 1;
+
+  if (addItemForm) {
+    addItemForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nameInput = document.getElementById("item-name");
+      const imageInput = document.getElementById("item-image");
+
+      const name = nameInput.value.trim();
+      if (!name) return;
+
+      const newItem = document.createElement("div");
+      newItem.className = "draggable_item";
+      newItem.id = `item_${nextItemId}`;
+      newItem.draggable = true;
+      newItem.title = name;
+      const file = imageInput.files[0];
+      if (file) {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.alt = name;
+        newItem.appendChild(img);
+        }
+        else { 
+          newItem.textContent = name;
+        }
+
+        newItem.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', newItem.id);
+          newItem.classList.add('dragging');
+        });
+        newItem.addEventListener('dragend', () => 
+          newItem.classList.remove('dragging'));
+
+        pool.appendChild(newItem);
+        nextItemId++;
+        addItemForm.reset();
+      });
+
+  }
 
   document
     .getElementById("saveBtn")
-    .addEventListener("click", saveTierList);
+    .addEventListener("click", () => {
+      const name = prompt("Enter a name for your tierlist: ");
+      if (!name || !name.trim()) return;
+
+      saveTierList(name.trim());
+    });
+    
 
   items.forEach(item => {
     item.draggable = true;
@@ -52,14 +101,14 @@ function getTierState() {
 
   return state;
 }
-function saveTierList() {
+function saveTierList(name) {
   const state = getTierState();
 
   fetch("/save", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      title: "My Tier List",
+      title: name,
       tiers: state
     })
   })
