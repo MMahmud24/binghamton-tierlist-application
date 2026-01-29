@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tierlists.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = "a7f3c9e2b8d4f1a6e9c2b7d4f3a8e1c9"
 
 db = SQLAlchemy(app)
 
@@ -26,12 +27,31 @@ def create():
 
 @app.route("/login")
 def login():
+     if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if not username or not password:
+            flash('Please enter both username and password', 'error')
+            return render_template("login.html")
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
+            session['user_id'] = user.id
+            session['username'] = user.username
+            flash('Login successful!', 'success')
+            return redirect(url_for('create'))
+        else:
+            flash('Invalid username or password', 'error')
+            return render_template("login.html")
     return render_template("login.html")
 
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
 
+def logout():
+    session.clear()
+    flash('You have been logged out', 'success')
+    return redirect(url_for('index'))
 
 
 # @app.route("/save", methods=["POST"])
