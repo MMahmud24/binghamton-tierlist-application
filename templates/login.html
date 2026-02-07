@@ -1,28 +1,44 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
+
 {% block content %}
-    <div class = "auth-wrapper">
-        <form class="auth-card" onsubmit="return false;">
-            <h1> Login</h1>
-                <div class="input-box">
-                    <input type="text" placeholder ="Username" required>
-                </div>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h1>Login</h1>
 
-                <div class="input-box">
-                    <input type="text" placeholder ="Password"required>
-                </div>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
-                <div class="remember-forgot">
-                    <label><input type = "checkbox"> Remember me</label>
-                    <a href ="#"> Forgot password?</a>
-                </div>
+    <form action="{{ url_for('login') }}" method="POST" class="auth-form">
+      <div class="input-box">
+        <input type="text" name="username" placeholder="Username" required>
+      </div>
 
-                <button type = "submit" class = "btn">Login</button>
-                <div class="register-link">
-                    <p>Don't have an account?<a href="/signup"> Register</a></p>
-                </div>
-        </form>
-    </div>  
+      <div class="input-box">
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
 
+      <div class="remember-forgot">
+        <label>
+          <input type="checkbox" name="remember"> Remember me
+        </label>
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn primary">Login</button>
+    </form>
+
+    <div class="register-link">
+      <p>Don't have an account?
+        <a href="{{ url_for('signup') }}">Create one</a>
+      </p>
+    </div>
+  </div>
 </div>
-
 {% endblock %}

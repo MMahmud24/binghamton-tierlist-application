@@ -1,23 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>All Tier Lists</h2>
 
-{% if tierlists %}
-    <ul class="tierlist-links">
-        {% for tierlist in tierlists %}
-            <li>
-                <a href="/view/{{ tierlist.id }}">
-                    {{ tierlist.title }}
+<section class="hero">
+    <div class="hero-text">
+        <p class="eyebrow">Binghamton Tier Lists</p>
+        <h1>Rank anything. Share everything.</h1>
+        <p class="subhead">Build custom tier lists for clubs, classes, food spots, and more. Save, revisit, and show your friends.</p>
+        <div class="hero-actions">
+            <a href="{{ url_for('create') }}" class="btn hero-btn">Create a Tier List</a>
+            <a href="#gallery" class="text-link">Browse saved lists ↓</a>
+        </div>
+    </div>
+</section>
+
+<section id="gallery" class="gallery-section">
+    <div class="section-heading">
+        <h2>Saved Tier Lists</h2>
+        <p>Click any card to open and view the details.</p>
+    </div>
+
+    {% if tierlists %}
+        <div class="gallery-grid">
+            {% for tierlist in tierlists %}
+                <a href="{{ url_for('view_tierlist', id=tierlist.id) }}" class="gallery-card">
+                    <div class="thumb mini-tierlist">
+                        {% if tierlist.mini_tiers %}
+                            {% for row in tierlist.mini_tiers %}
+                                <div class="mini-row">
+                                    <span class="mini-label tier-label-{{ row.label|lower }}">{{ row.label }}</span>
+                                    <div class="mini-items">
+                                        {% if row["items"] %}
+                                            {% for item in row["items"] %}
+                                                <div class="mini-item">
+                                                    {% if item.image %}
+                                                        <img src="{{ item.image }}" alt="{{ item.name }}">
+                                                    {% else %}
+                                                        <span class="mini-text">{{ item.name[:4] }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <span class="mini-empty">—</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="thumb-placeholder">{{ tierlist.title[0:1]|upper }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h3>{{ tierlist.title }}</h3>
+                        <p class="muted">Click to view</p>
+                    </div>
                 </a>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No tier lists yet. Be the first to create one!</p>
-{% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-state">No tier lists yet. Be the first to create one!</p>
+    {% endif %}
+</section>
 
-<a href="/create" class="btn" style="margin-top: 1.5rem; display:inline-block;">
-    Create a Tier List
-</a>
 {% endblock %}

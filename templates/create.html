@@ -3,51 +3,71 @@
 {% block title %}Create Tier List{% endblock %}
 
 {% block content %}
-
-    <div class="tierlist-controls">
-        <button id="saveBtn">Save Tier List</button>
-    </div>
-    
-    <div class="tier_row">
-        <div id="tier_S" class="tier_label">S</div>
-        <div id="dropzone_S" class="dropzone"></div>
-    </div>
-    <div class="tier_row">
-        <div id="tier_A" class="tier_label">A</div>
-        <div id="dropzone_A" class="dropzone"></div>
-    </div>
-    <div class="tier_row">
-        <div id="tier_B" class="tier_label">B</div>
-        <div id="dropzone_B" class="dropzone"></div>
-    </div>
-    <div class="tier_row">
-        <div id="tier_C" class="tier_label">C</div>
-        <div id="dropzone_C" class="dropzone"></div>
-    </div>
-    <div class="tier_row">
-        <div id="tier_D" class="tier_label">D</div>
-        <div id="dropzone_D" class="dropzone"></div>
-    </div>
-    <div class="tier_row">
-        <div id="tier_F" class="tier_label">F</div>
-        <div id="dropzone_F" class="dropzone"></div>  
+<section class="page">
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">Builder</p>
+            <h1>Create Your Tier List</h1>
+            <p class="subhead">Drag items into tiers, add your own entries, then save.</p>
+        </div>
+        <button id="saveBtn" class="btn primary">Save Tier List</button>
     </div>
 
-    <div id="item_pool">
-        <div class="draggable_item" id="item_1" draggable="true">1</div>
-        <div class="draggable_item" id="item_2" draggable="true">2</div>
-        <div class="draggable_item" id="item_3" draggable="true">3</div>
-        <div class="draggable_item" id="item_4" draggable="true">4</div>
-        <div class="draggable_item" id="item_5" draggable="true">5</div>
-        <div class="draggable_item" id="item_6" draggable="true">6</div>
-        <div class="draggable_item" id="item_7" draggable="true">7</div>
-        <div class="draggable_item" id="item_8" draggable="true">8</div>
-        <div class="draggable_item" id="item_9" draggable="true">9</div>
-        <div class="draggable_item" id="item_10" draggable="true">10</div>
-        <div class="draggable_item" id="item_11" draggable="true">11</div>
-        <div class="draggable_item" id="item_12" draggable="true">12</div>
+    <div class="tier-board glass">
+        <div class="tier_row">
+            <div id="tier_S" class="tier_label">S</div>
+            <div id="dropzone_S" class="dropzone"></div>
+        </div>
+        <div class="tier_row">
+            <div id="tier_A" class="tier_label">A</div>
+            <div id="dropzone_A" class="dropzone"></div>
+        </div>
+        <div class="tier_row">
+            <div id="tier_B" class="tier_label">B</div>
+            <div id="dropzone_B" class="dropzone"></div>
+        </div>
+        <div class="tier_row">
+            <div id="tier_C" class="tier_label">C</div>
+            <div id="dropzone_C" class="dropzone"></div>
+        </div>
+        <div class="tier_row">
+            <div id="tier_D" class="tier_label">D</div>
+            <div id="dropzone_D" class="dropzone"></div>
+        </div>
+        <div class="tier_row">
+            <div id="tier_F" class="tier_label">F</div>
+            <div id="dropzone_F" class="dropzone"></div>  
+        </div>
     </div>
-    
 
-    
+    <div class="panel">
+        <h2 class="panel-title">Item Pool</h2>
+        <div id="item_pool" class="item-pool">
+            <div class="draggable_item" id="item_1" draggable="true">1</div>
+            <div class="draggable_item" id="item_2" draggable="true">2</div>
+            <div class="draggable_item" id="item_3" draggable="true">3</div>
+            <div class="draggable_item" id="item_4" draggable="true">4</div>
+            <div class="draggable_item" id="item_5" draggable="true">5</div>
+            <div class="draggable_item" id="item_6" draggable="true">6</div>
+            <div class="draggable_item" id="item_7" draggable="true">7</div>
+            <div class="draggable_item" id="item_8" draggable="true">8</div>
+            <div class="draggable_item" id="item_9" draggable="true">9</div>
+            <div class="draggable_item" id="item_10" draggable="true">10</div>
+            <div class="draggable_item" id="item_11" draggable="true">11</div>
+            <div class="draggable_item" id="item_12" draggable="true">12</div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2 class="panel-title">Add a Custom Item</h2>
+        <form id="add_item" class="add-item-form">
+            <input type="text" id="item-name" placeholder="Item name" required />
+            <label class="file-input">
+                <input type="file" id="item-image" accept="image/*" />
+                <span>Upload image (optional)</span>
+            </label>
+            <button type="submit" class="btn secondary">Add Item</button>
+        </form>
+    </div>
+</section>
 {% endblock %}
