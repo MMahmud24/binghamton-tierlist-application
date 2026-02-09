@@ -1,18 +1,17 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
 import os
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_sqlalchemy import SQLAlchemy
 import json
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tierlists.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///tierlists.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-#need to insert secret key here, will ask at next meeting
-app.config["SECRET_KEY"] = "a7f3c9e2b8d4f1a6e9c2b7d4f3a8e1c9"
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "a7f3c9e2b8d4f1a6e9c2b7d4f3a8e1c9")
 
 db = SQLAlchemy(app)
+
 
 class TierList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,20 +32,12 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-
-
-
-@app.route("/")
-def index():
-    tierlists = TierList.query.order_by(TierList.id.desc()).all()
-
-    # Build preview data for gallery, including a miniature tierlist view
+def _build_preview_data(tierlists):
     preview_data = []
     for tl in tierlists:
         mini_tiers = []
         try:
             tiers = json.loads(tl.data)
-            # preserve standard order
             for tier_label in ["S", "A", "B", "C", "D", "F"]:
                 items = tiers.get(tier_label, [])
                 row = []
@@ -68,12 +59,20 @@ def index():
             "title": tl.title,
             "mini_tiers": mini_tiers,
         })
+    return preview_data
 
+
+@app.route("/")
+def index():
+    tierlists = TierList.query.order_by(TierList.id.desc()).all()
+    preview_data = _build_preview_data(tierlists)
     return render_template("index.html", tierlists=preview_data)
+
 
 @app.route("/create")
 def create():
     return render_template("create.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -94,6 +93,7 @@ def login():
             return render_template("login.html")
 
     return render_template("login.html")
+
 
 @app.route("/logout")
 def logout():
@@ -116,12 +116,10 @@ def signup():
         if password != password2:
             return render_template("signup.html", error="Passwords do not match.")
 
-        # Check for existing user
         existing_user = User.query.filter((User.username == username) | (User.email == email)).first()
         if existing_user:
             return render_template("signup.html", error="Username or email already exists.")
 
-        # Create user
         new_user = User(email=email, username=username)
         new_user.set_password(password)
         db.session.add(new_user)
@@ -133,7 +131,6 @@ def signup():
         return render_template('signup.html', success=True, redirect_url=url_for('login'), username=new_user.username)
 
     return render_template("signup.html")
-
 
 
 @app.route("/save", methods=["POST"])
@@ -153,8 +150,6 @@ def save():
 
     return jsonify({"id": tierlist.id})
 
-
-# @app.route("/view/<int:id>", methods=["POST"])
 
 @app.route("/view/<int:id>")
 def view_tierlist(id):
