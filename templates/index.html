@@ -14,11 +14,57 @@
     </div>
 </section>
 
+<div class="section-heading">
+    <h2>Featured Tier Lists</h2>
+</div>
+
+    {% if featured_lists %}
+        <div class="gallery-grid">
+            {% for tierlist in featured_lists %}
+                <a href="{{ url_for('view_tierlist', id=tierlist.id) }}" class="gallery-card">
+                    <div class="thumb mini-tierlist">
+                        {% if tierlist.mini_tiers %}
+                            {% for row in tierlist.mini_tiers %}
+                                <div class="mini-row">
+                                    <span class="mini-label tier-label-{{ row.label|lower }}">{{ row.label }}</span>
+                                    <div class="mini-items">
+                                        {% if row["items"] %}
+                                            {% for item in row["items"] %}
+                                                <div class="mini-item">
+                                                    {% if item.image %}
+                                                        <img src="{{ item.image }}" alt="{{ item.name }}">
+                                                    {% else %}
+                                                        <span class="mini-text">{{ item.name[:4] }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <span class="mini-empty">—</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="thumb-placeholder">{{ tierlist.title[0:1]|upper }}</div>
+                        {% endif %}
+                    </div>
+                <div class="card-body">
+                    <h3>{{ tierlist.title }}</h3>
+                    <p class="muted">Featured</p>
+                </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-state">No featured lists yet.</p>
+    {% endif %}
+
 <section id="gallery" class="gallery-section">
     <div class="section-heading">
         <h2>Saved Tier Lists</h2>
         <p>Click any card to open and view the details.</p>
     </div>
+
 
     {% if tierlists %}
         <div class="gallery-grid">
@@ -61,5 +107,7 @@
         <p class="empty-state">No tier lists yet. Be the first to create one!</p>
     {% endif %}
 </section>
+
+
 
 {% endblock %}

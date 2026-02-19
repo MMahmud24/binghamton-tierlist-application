@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///tierlists.db")
+print("DB URI:", app.config["SQLALCHEMY_DATABASE_URI"])
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "a7f3c9e2b8d4f1a6e9c2b7d4f3a8e1c9")
 
@@ -17,7 +18,7 @@ class TierList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     data = db.Column(db.Text)
-
+    featured = db.Column(db.Boolean, default=False)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,8 +66,10 @@ def _build_preview_data(tierlists):
 @app.route("/")
 def index():
     tierlists = TierList.query.order_by(TierList.id.desc()).all()
+    featured_lists = TierList.query.filter_by(featured=True).order_by(TierList.id.desc()).all()
     preview_data = _build_preview_data(tierlists)
-    return render_template("index.html", tierlists=preview_data)
+    featured_preview = _build_preview_data(featured_lists)
+    return render_template("index.html", tierlists=preview_data, featured_lists=featured_preview)
 
 
 @app.route("/create")
@@ -173,5 +176,11 @@ def debug_db():
 
 if __name__ == "__main__":
     with app.app_context():
+        try:
+            db.session.execute("ALTER TABLE tier_list ADD COLUMN featured BOOLEAN DEFAULT 0;")
+            db.session.commit()
+            print("Added 'featured' column to tier_list.")
+        except Exception as e:
+            print("Column probably exists already:", e)
         db.create_all()
     app.run(debug=True)
