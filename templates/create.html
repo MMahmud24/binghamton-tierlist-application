@@ -1,16 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %}Create Tier List{% endblock %}
+{% block title %}{% if edit_mode %}Edit Tier List{% else %}Create Tier List{% endif %}{% endblock %}
 
 {% block content %}
+
+{% if edit_mode %}
+<script>
+  window.EDIT_MODE = true;
+  window.EDIT_ID = {{ edit_id }};
+  window.EDIT_TITLE = {{ edit_title | tojson }};
+  window.EDIT_COVER = {{ (edit_cover or '') | tojson }};
+  window.EDIT_TIERS = {{ edit_tiers | tojson | safe }};
+</script>
+{% else %}
+<script>window.EDIT_MODE = false;</script>
+{% endif %}
+
 <section class="page">
     <div class="page-header">
         <div>
-            <p class="eyebrow">Builder</p>
-            <h1>Create Your Tier List</h1>
+            <p class="eyebrow">{% if edit_mode %}Editing{% else %}Builder{% endif %}</p>
+            <h1>{% if edit_mode %}Edit Your Tier List{% else %}Create Your Tier List{% endif %}</h1>
             <p class="subhead">Drag items into tiers, add your own entries, then save.</p>
         </div>
-        <button id="saveBtn" class="btn primary">Save Tier List</button>
+        <button id="saveBtn" class="btn primary">{% if edit_mode %}Save Changes{% else %}Save Tier List{% endif %}</button>
     </div>
 
     <div class="tier-board glass">
@@ -43,6 +56,7 @@
     <div class="panel">
         <h2 class="panel-title">Item Pool</h2>
         <div id="item_pool" class="item-pool">
+            {% if not edit_mode %}
             <div class="draggable_item" id="item_1" draggable="true">1</div>
             <div class="draggable_item" id="item_2" draggable="true">2</div>
             <div class="draggable_item" id="item_3" draggable="true">3</div>
@@ -55,6 +69,7 @@
             <div class="draggable_item" id="item_10" draggable="true">10</div>
             <div class="draggable_item" id="item_11" draggable="true">11</div>
             <div class="draggable_item" id="item_12" draggable="true">12</div>
+            {% endif %}
         </div>
     </div>
 
@@ -70,4 +85,39 @@
         </form>
     </div>
 </section>
+
+<!-- Save / Edit Modal -->
+<div id="saveModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+        <h2 id="modalTitle">{% if edit_mode %}Save Changes{% else %}Save Your Tier List{% endif %}</h2>
+        <p class="modal-sub">{% if edit_mode %}Update the name and cover image for your tier list.{% else %}Give your tier list a name and optionally a cover image.{% endif %}</p>
+
+        <div class="modal-field">
+            <label for="tl-title">Tier List Name <span class="required">*</span></label>
+            <input type="text" id="tl-title" placeholder="e.g. Best Binghamton Food Spots" maxlength="100" />
+            <span class="field-error" id="titleError">Please enter a name.</span>
+        </div>
+
+        <div class="modal-field">
+            <label>Cover Image <span class="optional">(optional)</span></label>
+            <label class="cover-upload" id="coverUploadLabel">
+                <input type="file" id="coverImageInput" accept="image/*" />
+                <div class="cover-preview-wrap">
+                    <div class="cover-placeholder" id="coverPlaceholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Click to upload a cover image</span>
+                    </div>
+                    <img id="coverPreview" src="" alt="Cover preview" style="display:none;" />
+                </div>
+            </label>
+            <button type="button" class="remove-cover" id="removeCover" style="display:none;">Remove image</button>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn modal-cancel" id="modalCancel">Cancel</button>
+            <button class="btn modal-save" id="modalSave">{% if edit_mode %}Save Changes{% else %}Save Tier List{% endif %}</button>
+        </div>
+    </div>
+</div>
 {% endblock %}
