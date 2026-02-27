@@ -19,6 +19,7 @@
 </div>
 
     {% if featured_lists %}
+        <div class="featured-scroll-container">
         <div class="gallery-grid">
             {% for tierlist in featured_lists %}
                 <a href="{{ url_for('view_tierlist', id=tierlist.id) }}" class="gallery-card">
@@ -54,6 +55,7 @@
                 </div>
                 </a>
             {% endfor %}
+        </div>
         </div>
     {% else %}
         <p class="empty-state">No featured lists yet.</p>
@@ -107,7 +109,6 @@
         <p class="empty-state">No tier lists yet. Be the first to create one!</p>
     {% endif %}
 </section>
-
 
 
 {% endblock %}

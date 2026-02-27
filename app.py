@@ -65,7 +65,7 @@ def _build_preview_data(tierlists):
 
 @app.route("/")
 def index():
-    tierlists = TierList.query.order_by(TierList.id.desc()).all()
+    tierlists = TierList.query.filter_by(featured=False).order_by(TierList.id.desc()).all()
     featured_lists = TierList.query.filter_by(featured=True).order_by(TierList.id.desc()).all()
     preview_data = _build_preview_data(tierlists)
     featured_preview = _build_preview_data(featured_lists)
@@ -183,4 +183,25 @@ if __name__ == "__main__":
         except Exception as e:
             print("Column probably exists already:", e)
         db.create_all()
+        if not TierList.query.filter_by(featured=True).first():
+            sample_tiers = {
+                "items": [
+                    {"name": "Item 1", "image": None},
+                    {"name": "Item 2", "image": None},
+                    {"name": "Item 3", "image": None}
+                ],
+                "S": [],
+                "A": [],
+                "B": [],
+                "C": [],
+                "D": [],
+                "F": []
+            }
+            sample_tierlist = TierList(
+                title="Sample Featured Tier List",
+                data=json.dumps(sample_tiers),
+                featured=True
+            )
+            db.session.add(sample_tierlist)
+            db.session.commit()
     app.run(debug=True)

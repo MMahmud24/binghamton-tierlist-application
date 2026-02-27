@@ -694,3 +694,17 @@ main {
     color: #1c1c1c;
     border-right: 1px solid rgba(0,0,0,0.12);
 }
+
+
+.featured-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem;
+}
+  
+.featured-scroll-container .gallery-card {
+    min-width: 220px;
+    aspect-ratio: 1/1;
+    flex: 0 0 auto;
+}
