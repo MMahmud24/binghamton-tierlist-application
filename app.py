@@ -74,7 +74,19 @@ def index():
 
 @app.route("/create")
 def create():
-    return render_template("create.html")
+    edit_id = request.args.get("edit_id")
+
+    if edit_id:
+        tierlist = TierList.query.get_or_404(edit_id)
+        tiers = json.loads(tierlist.data)
+
+        return render_template(
+            "create.html",
+            tier_data=tiers,
+            edit_id=edit_id
+        )
+
+    return render_template("create.html", tier_data=None)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -156,14 +168,7 @@ def save():
 
 @app.route("/view/<int:id>")
 def view_tierlist(id):
-    tierlist = TierList.query.get_or_404(id)
-    tiers = json.loads(tierlist.data)
-
-    return render_template(
-        "view.html",
-        title=tierlist.title,
-        tiers=tiers
-    )
+    return redirect(url_for("create", edit_id=id))
 
 
 @app.route("/debug/db")
@@ -176,32 +181,52 @@ def debug_db():
 
 if __name__ == "__main__":
     with app.app_context():
-        try:
-            db.session.execute("ALTER TABLE tier_list ADD COLUMN featured BOOLEAN DEFAULT 0;")
-            db.session.commit()
-            print("Added 'featured' column to tier_list.")
-        except Exception as e:
-            print("Column probably exists already:", e)
         db.create_all()
-        if not TierList.query.filter_by(featured=True).first():
-            sample_tiers = {
-                "items": [
-                    {"name": "Item 1", "image": None},
-                    {"name": "Item 2", "image": None},
-                    {"name": "Item 3", "image": None}
-                ],
-                "S": [],
-                "A": [],
-                "B": [],
-                "C": [],
-                "D": [],
-                "F": []
-            }
-            sample_tierlist = TierList(
-                title="Sample Featured Tier List",
-                data=json.dumps(sample_tiers),
-                featured=True
-            )
-            db.session.add(sample_tierlist)
-            db.session.commit()
+
+    
+        TierList.query.filter_by(featured=True).delete()
+
+        sample_tiers = {
+            "items": [
+                {"name": "Hinamn - Lehman", "image": None},
+                {"name": "Hinamn - Roosevelt", "image": None},
+                {"name": "Hinamn - Hughes", "image": None},
+                {"name": "Hinamn - Cleveland", "image": None},
+                {"name": "Hinamn - Smith", "image": None},
+                {"name": "Mountainview - Windham", "image": None},
+                {"name": "Mountainview - Cascade", "image": None},
+                {"name": "Mountainview - Marcy", "image": None},
+                {"name": "Mountainview - Hunter", "image": None},
+                {"name": "Dickinson - Digman", "image": None},
+                {"name": "Dickinson - Rafuse", "image": None},
+                {"name": "Dickinson - Chenango", "image": None},
+                {"name": "Dickinson - Champlpain", "image": None},
+                {"name": "CIW - Onandaga", "image": None},
+                {"name": "CIW - Cayuga", "image": None},
+                {"name": "CIW - Mohawk", "image": None},
+                {"name": "CIW - Oneida", "image": None},        
+                {"name": "CIW - Seneca", "image": None},
+                {"name": "Newing - Broome", "image": None},
+                {"name": "Newing - Endicott", "image": None},
+                {"name": "Newing - Johnson", "image": None},
+                {"name": "Newing - Oneonta", "image": None},
+
+
+            ],
+            "S": [],
+            "A": [],
+            "B": [],
+            "C": [],
+            "D": [],
+            "F": []
+        }
+
+        sample_tierlist = TierList(
+            title="Binghamton Residence Halls",
+            data=json.dumps(sample_tiers),
+            featured=True
+        )
+
+        db.session.add(sample_tierlist)
+        db.session.commit()
     app.run(debug=True)
