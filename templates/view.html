@@ -61,6 +61,86 @@
         {% endfor %}
     </div>
 
+    <section class="vote-section">
+        <div class="vote-head">
+            <h2>Votes</h2>
+            <p class="muted">Score: <strong>{{ score }}</strong> ({{ upvotes }} up · {{ downvotes }} down)</p>
+        </div>
+        {% if current_user_id %}
+            <form action="{{ url_for('vote_tierlist', id=tierlist_id) }}" method="POST" class="vote-actions">
+                <button type="submit" name="vote" value="up" class="btn vote-btn upvote-btn {% if current_user_vote == 1 %}active{% endif %}">
+                    👍 Upvote
+                </button>
+                <button type="submit" name="vote" value="down" class="btn vote-btn downvote-btn {% if current_user_vote == -1 %}active{% endif %}">
+                    👎 Downvote
+                </button>
+            </form>
+        {% else %}
+            <p class="muted">Want to vote? <a href="{{ url_for('login') }}">Log in</a> first.</p>
+        {% endif %}
+    </section>
+
+    <section class="comments-section">
+        <div class="comments-head">
+            <h2>Comments</h2>
+            <p class="muted">{{ comments|length }} total</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if current_user_id %}
+            <form action="{{ url_for('add_comment', id=tierlist_id) }}" method="POST" class="comment-form">
+                <label for="comment-content">Leave a comment</label>
+                <textarea id="comment-content" name="content" maxlength="1000" required placeholder="Share your thoughts about this tier list..."></textarea>
+                <button type="submit" class="btn primary">Post Comment</button>
+            </form>
+        {% else %}
+            <p class="muted">Want to comment? <a href="{{ url_for('login') }}">Log in</a> first.</p>
+        {% endif %}
+
+        <div class="comment-list">
+            {% for comment in comments %}
+                <article class="comment-card">
+                    <div class="comment-meta">
+                        <p>
+                            <strong>{{ comment.user.username }}</strong>
+                            <span class="muted">· {{ comment.created_at.strftime("%b %d, %Y %I:%M %p") }}</span>
+                            {% if comment.updated_at > comment.created_at %}
+                                <span class="muted">(edited)</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <p class="comment-content">{{ comment.content }}</p>
+
+                    {% if current_user_id == comment.user_id %}
+                        <div class="comment-actions">
+                            <details>
+                                <summary>Edit</summary>
+                                <form action="{{ url_for('edit_comment', tierlist_id=tierlist_id, comment_id=comment.id) }}" method="POST" class="comment-edit-form">
+                                    <textarea name="content" maxlength="1000" required>{{ comment.content }}</textarea>
+                                    <button type="submit" class="btn primary">Save</button>
+                                </form>
+                            </details>
+                            <form action="{{ url_for('delete_comment', tierlist_id=tierlist_id, comment_id=comment.id) }}" method="POST">
+                                <button type="submit" class="btn comment-delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </article>
+            {% else %}
+                <p class="muted">No comments yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+
     <div class="view-actions">
         <a href="{{ url_for('create') }}" class="btn primary" style="width:auto; padding: 11px 22px;">Make Your Own</a>
         <a href="{{ url_for('index') }}" class="btn" style="width:auto; padding: 11px 22px; background:#f0f5f3; color:#0b2f26;">Browse All Lists</a>
