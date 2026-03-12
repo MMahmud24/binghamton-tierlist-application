@@ -1,10 +1,63 @@
 import os
 import json
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.sql import func
 from sqlalchemy import UniqueConstraint
+
+# Starter featured templates. These ship with the app so newcomers can try a
+# premade tier list without creating one from scratch.
+FEATURED_TEMPLATES = [
+    {
+        "slug": "residence-halls",
+        "title": "Binghamton Residence Halls (Starter)",
+        "cover_image": None,
+        "tiers": {
+            "S": [
+            ],
+            "A": [
+    
+            ],
+            "B": [
+       
+            ],
+            "C": [
+           
+            ],
+            "D": [
+    
+            ],
+            "F": [
+             
+            ],
+            "POOL": [
+                {"name": "Hinamn - Lehman", "image": None},
+                {"name": "Hinamn - Roosevelt", "image": None},
+                {"name": "Hinamn - Hughes", "image": None},
+                {"name": "Hinamn - Cleveland", "image": None},
+                {"name": "Hinamn - Smith", "image": None},
+                {"name": "Mountainview - Windham", "image": None},
+                {"name": "Mountainview - Cascade", "image": None},
+                {"name": "Mountainview - Marcy", "image": None},
+                {"name": "Mountainview - Hunter", "image": None},
+                {"name": "Dickinson - Digman", "image": None},
+                {"name": "Dickinson - Rafuse", "image": None},
+                {"name": "Dickinson - Chenango", "image": None},
+                {"name": "Dickinson - Champlpain", "image": None},
+                {"name": "CIW - Onandaga", "image": None},
+                {"name": "CIW - Cayuga", "image": None},
+                {"name": "CIW - Mohawk", "image": None},
+                {"name": "CIW - Oneida", "image": None},        
+                {"name": "CIW - Seneca", "image": None},
+                {"name": "Newing - Broome", "image": None},
+                {"name": "Newing - Endicott", "image": None},
+                {"name": "Newing - Johnson", "image": None},
+                {"name": "Newing - Oneonta", "image": None},
+            ],
+        },
+    },
+]
 
 app = Flask(__name__)
 
@@ -94,16 +147,56 @@ def _build_preview_data(tierlists):
     return preview_data
 
 
+def _build_featured_preview():
+    featured_preview = []
+    for tpl in FEATURED_TEMPLATES:
+        tiers = tpl.get("tiers") or {}
+        mini_tiers = []
+        for tier_label in ["S", "A", "B", "C", "D", "F"]:
+            items = tiers.get(tier_label, [])
+            row = []
+            for item in items:
+                row.append({
+                    "name": item.get("name") or "",
+                    "image": item.get("image"),
+                })
+            mini_tiers.append({"label": tier_label, "items": row})
+
+        featured_preview.append({
+            "slug": tpl["slug"],
+            "title": tpl["title"],
+            "cover_image": tpl.get("cover_image"),
+            "mini_tiers": mini_tiers,
+        })
+    return featured_preview
+
+
 @app.route("/")
 def index():
     tierlists = TierList.query.order_by(TierList.id.desc()).all()
     preview_data = _build_preview_data(tierlists)
-    return render_template("index.html", tierlists=preview_data)
+    featured_preview = _build_featured_preview()
+    return render_template("index.html", tierlists=preview_data, featured_lists=featured_preview)
 
 
 @app.route("/create")
 def create():
-    return render_template("create.html")
+    return render_template("create.html", template_mode=False)
+
+
+@app.route("/featured/<slug>")
+def start_featured(slug):
+    template = next((tpl for tpl in FEATURED_TEMPLATES if tpl["slug"] == slug), None)
+    if not template:
+        abort(404)
+
+    return render_template(
+        "create.html",
+        template_mode=True,
+        template_title=template["title"],
+        template_cover=template.get("cover_image"),
+        template_tiers=template.get("tiers", {}),
+    )
 
 
 @app.route("/login", methods=["GET", "POST"])

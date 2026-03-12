@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Populate board ───────────────────────────────────────────────
   if (window.EDIT_MODE && window.EDIT_TIERS) {
     loadEditData(window.EDIT_TIERS);
+  } else if (window.TEMPLATE_MODE && window.TEMPLATE_TIERS) {
+    loadEditData(window.TEMPLATE_TIERS);
   }
 
   // Make any pre-existing static items (create mode) draggable
@@ -73,7 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const removeCover      = document.getElementById('removeCover');
 
   // Track the current cover — starts as the existing one in edit mode
-  let coverImageDataUrl = (window.EDIT_MODE && window.EDIT_COVER) ? window.EDIT_COVER : null;
+  let coverImageDataUrl = null;
+  if (window.EDIT_MODE && window.EDIT_COVER) {
+    coverImageDataUrl = window.EDIT_COVER;
+  } else if (window.TEMPLATE_MODE && window.TEMPLATE_COVER) {
+    coverImageDataUrl = window.TEMPLATE_COVER;
+  }
 
   function openModal() {
     modal.classList.add('open');
@@ -81,7 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
     titleError.style.display = 'none';
 
     // Pre-fill fields
-    tlTitle.value = window.EDIT_MODE ? (window.EDIT_TITLE || '') : '';
+    const defaultName = window.EDIT_MODE
+      ? (window.EDIT_TITLE || '')
+      : (window.TEMPLATE_MODE ? (window.TEMPLATE_TITLE || '') : '');
+    tlTitle.value = defaultName;
 
     if (coverImageDataUrl) {
       coverPreview.src = coverImageDataUrl;
