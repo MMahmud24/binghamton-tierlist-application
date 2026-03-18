@@ -9,6 +9,7 @@ from sqlalchemy import UniqueConstraint
 # Starter featured templates. These ship with the app so newcomers can try a
 # premade tier list without creating one from scratch.
 FEATURED_TEMPLATES = [
+
     {
         "slug": "residence-halls",
         "title": "Binghamton Residence Halls (Starter)",
@@ -57,6 +58,8 @@ FEATURED_TEMPLATES = [
             ],
         },
     },
+
+    
 ]
 
 app = Flask(__name__)
