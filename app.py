@@ -59,6 +59,54 @@ FEATURED_TEMPLATES = [
         },
     },
 
+    {
+        "slug": "study-spots",
+        "title": "Binghamton Study Spots (Starter)",
+        "cover_image": None,
+        "tiers": {
+            "S": [
+            ],
+            "A": [
+    
+            ],
+            "B": [
+       
+            ],
+            "C": [
+           
+            ],
+            "D": [
+    
+            ],
+            "F": [
+             
+            ],
+            "POOL": [
+                {"name": "Bartle Library - 1st Floor", "image": None},                
+                {"name": "Bartle Library - Computer Lab", "image": None},
+                {"name": "Bartle Library - 2nd Floor", "image": None},
+                {"name": "Bartle Library - 3rd Floor", "image": None},
+                {"name": "Bartle Library - 4th Floor", "image": None},
+                {"name": "Science Library - Ground Floor", "image": None},
+                {"name": "Science Library - 1st Floor", "image": None},
+                {"name": "Science Library - 2nd Floor", "image": None},
+                {"name": "Science Library - Blue Room", "image": None},
+                {"name": "Science Library - Grape Room", "image": None},
+                {"name": "Science Library - Grey Room", "image": None},
+                {"name": "Science Library - Orange Room", "image": None},
+                {"name": "Innovation Lab", "image": None},
+                {"name": "Jazzman's Booths", "image": None},
+                {"name": "Hinman Success Center", "image": None},
+                {"name": "C4 Couches ", "image": None},
+                {"name": "Appalachian Collegiate Center", "image": None},
+                {"name": "University Undergrounds Lounge", "image": None},
+                {"name": "Union Atrium", "image": None},
+                {"name": "Classroom Wing Corners", "image": None},
+                {"name": "Engineering Building", "image": None},
+            ],
+        },
+    },
+
     
 ]
 
