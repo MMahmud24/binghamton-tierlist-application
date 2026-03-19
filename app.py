@@ -33,17 +33,17 @@ FEATURED_TEMPLATES = [
              
             ],
             "POOL": [
-                {"name": "Hinamn - Lehman", "image": None},
-                {"name": "Hinamn - Roosevelt", "image": None},
-                {"name": "Hinamn - Hughes", "image": None},
-                {"name": "Hinamn - Cleveland", "image": None},
-                {"name": "Hinamn - Smith", "image": None},
+                {"name": "Hinman - Lehman", "image": None},
+                {"name": "Hinman - Roosevelt", "image": None},
+                {"name": "Hinman - Hughes", "image": None},
+                {"name": "Hinman - Cleveland", "image": None},
+                {"name": "Hinman - Smith", "image": None},
                 {"name": "Mountainview - Windham", "image": None},
                 {"name": "Mountainview - Cascade", "image": None},
                 {"name": "Mountainview - Marcy", "image": None},
                 {"name": "Mountainview - Hunter", "image": None},
                 {"name": "Dickinson - Digman", "image": None},
-                {"name": "Dickinson - Rafuse", "image": None},
+                {"name": "Dickinson - Old Rafuse", "image": None},
                 {"name": "Dickinson - Chenango", "image": None},
                 {"name": "Dickinson - Champlpain", "image": None},
                 {"name": "CIW - Onandaga", "image": None},
@@ -55,6 +55,51 @@ FEATURED_TEMPLATES = [
                 {"name": "Newing - Endicott", "image": None},
                 {"name": "Newing - Johnson", "image": None},
                 {"name": "Newing - Oneonta", "image": None},
+            ],
+        },
+    },
+
+    {
+        "slug": "food-spots",
+        "title": "Binghamton Food Spots",
+        "cover_image": None,
+        "tiers": {
+            "S": [
+            ],
+            "A": [
+    
+            ],
+            "B": [
+       
+            ],
+            "C": [
+           
+            ],
+            "D": [
+    
+            ],
+            "F": [
+             
+            ],
+            "POOL": [
+                {"name": "Hinman", "image": None},
+                {"name": "Appalachain", "image": None},
+                {"name": "C4", "image": None},
+                {"name": "CIW", "image": None},
+                {"name": "Mein Bowl", "image": None},
+                {"name": "Tullys", "image": None},
+                {"name": "CopperTop Pizzeria", "image": None},
+                {"name": "Chick-N-Bap", "image": None},
+                {"name": "2nd Heaven (boba)", "image": None},
+                {"name": "Hissho Sushi", "image": None},
+                {"name": "Quesera", "image": None},
+                {"name": "Shake Smart", "image": None},
+                {"name": "Breakfast and Beyond", "image": None},
+                {"name": "Subway", "image": None},
+                {"name": "Royal Indian", "image": None},
+                
+
+                
             ],
         },
     },
