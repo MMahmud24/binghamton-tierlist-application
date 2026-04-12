@@ -6,8 +6,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.sql import func
 from sqlalchemy import UniqueConstraint
 
-# Starter featured templates. These ship with the app so newcomers can try a
-# premade tier list without creating one from scratch.
 FEATURED_TEMPLATES = [
 
     {
@@ -33,11 +31,11 @@ FEATURED_TEMPLATES = [
              
             ],
             "POOL": [
-                {"name": "Hinamn - Lehman", "image": None},
-                {"name": "Hinamn - Roosevelt", "image": None},
-                {"name": "Hinamn - Hughes", "image": None},
-                {"name": "Hinamn - Cleveland", "image": None},
-                {"name": "Hinamn - Smith", "image": None},
+                {"name": "Hinman - Lehman", "image": None},
+                {"name": "Hinman - Roosevelt", "image": None},
+                {"name": "Hinman - Hughes", "image": None},
+                {"name": "Hinman - Cleveland", "image": None},
+                {"name": "Hinman - Smith", "image": None},
                 {"name": "Mountainview - Windham", "image": None},
                 {"name": "Mountainview - Cascade", "image": None},
                 {"name": "Mountainview - Marcy", "image": None},
@@ -55,6 +53,99 @@ FEATURED_TEMPLATES = [
                 {"name": "Newing - Endicott", "image": None},
                 {"name": "Newing - Johnson", "image": None},
                 {"name": "Newing - Oneonta", "image": None},
+            ],
+        },
+    },
+
+        {
+        "slug": "study-spots",
+        "title": "Binghamton Study Spots (Starter)",
+        "cover_image": None,
+        "tiers": {
+            "S": [
+            ],
+            "A": [
+    
+            ],
+            "B": [
+       
+            ],
+            "C": [
+           
+            ],
+            "D": [
+    
+            ],
+            "F": [
+             
+            ],
+            "POOL": [
+                {"name": "Bartle Library - 1st Floor", "image": None},                
+                {"name": "Bartle Library - Computer Lab", "image": None},
+                {"name": "Bartle Library - 2nd Floor", "image": None},
+                {"name": "Bartle Library - 3rd Floor", "image": None},
+                {"name": "Bartle Library - 4th Floor", "image": None},
+                {"name": "Science Library - Ground Floor", "image": None},
+                {"name": "Science Library - 1st Floor", "image": None},
+                {"name": "Science Library - 2nd Floor", "image": None},
+                {"name": "Science Library - Blue Room", "image": None},
+                {"name": "Science Library - Grape Room", "image": None},
+                {"name": "Science Library - Grey Room", "image": None},
+                {"name": "Science Library - Orange Room", "image": None},
+                {"name": "Innovation Lab", "image": None},
+                {"name": "Jazzman's Booths", "image": None},
+                {"name": "Hinman Success Center", "image": None},
+                {"name": "C4 Couches ", "image": None},
+                {"name": "Appalachian Collegiate Center", "image": None},
+                {"name": "University Undergrounds Lounge", "image": None},
+                {"name": "Union Atrium", "image": None},
+                {"name": "Classroom Wing Corners", "image": None},
+                {"name": "Engineering Building", "image": None},
+            ],
+        },
+    },
+
+    {
+        "slug": "food-spots",
+        "title": "Binghamton Food Spots",
+        "cover_image": None,
+        "tiers": {
+            "S": [
+            ],
+            "A": [
+    
+            ],
+            "B": [
+       
+            ],
+            "C": [
+           
+            ],
+            "D": [
+    
+            ],
+            "F": [
+             
+            ],
+            "POOL": [
+                {"name": "Hinman", "image": None},
+                {"name": "Appalachain", "image": None},
+                {"name": "C4", "image": None},
+                {"name": "CIW", "image": None},
+                {"name": "Mein Bowl", "image": None},
+                {"name": "Tullys", "image": None},
+                {"name": "CopperTop Pizzeria", "image": None},
+                {"name": "Chick-N-Bap", "image": None},
+                {"name": "2nd Heaven (boba)", "image": None},
+                {"name": "Hissho Sushi", "image": None},
+                {"name": "Quesera", "image": None},
+                {"name": "Shake Smart", "image": None},
+                {"name": "Breakfast and Beyond", "image": None},
+                {"name": "Subway", "image": None},
+                {"name": "Royal Indian", "image": None},
+                
+
+                
             ],
         },
     },
