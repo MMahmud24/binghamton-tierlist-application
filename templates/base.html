@@ -9,7 +9,9 @@
 
     <header class="navbar">
         <div class="nav-left">
-            <h1 class="nav-title">Binghamton Tier Lists</h1>
+            <a href="{{ url_for('index') }}" class="nav-brand">
+                <img src="{{ url_for('static', filename='images/bu-logo.png') }}" alt="Binghamton University" class="nav-logo-img">
+            </a>
             {% if request.endpoint != 'index' %}
             <div class="nav-left-buttons">
                 <a href="{{ url_for('index') }}" class="nav-btn secondary">Back</a>
@@ -19,11 +21,14 @@
 
         <div class="nav-right">
             {% if session.get('username') %}
-                <span class="nav-user">Logged in as: {{ session['username'] }}</span>
-                <a href="{{ url_for('logout') }}" class="nav-btn">Logout</a>
+                <div class="nav-user-chip">
+                    <div class="nav-avatar">{{ session['username'][0].upper() }}</div>
+                    <span class="nav-username">{{ session['username'] }}</span>
+                </div>
+                <a href="{{ url_for('logout') }}" class="nav-btn nav-btn-outline">Logout</a>
             {% else %}
-                <a href="{{ url_for('login') }}" class="nav-btn">Login</a>
-                <a href="{{ url_for('signup') }}" class="nav-btn signup">Sign Up</a>
+                <a href="{{ url_for('login') }}" class="nav-btn nav-btn-outline">Login</a>
+                <a href="{{ url_for('signup') }}" class="nav-btn nav-btn-fill">Sign Up</a>
             {% endif %}
         </div>
     </header>

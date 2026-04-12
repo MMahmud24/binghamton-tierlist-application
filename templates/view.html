@@ -37,48 +37,50 @@
     </div>
 
     <!-- Tier Rows -->
-    <div class="tierlist-display">
-        {% set tier_labels = ["S", "A", "B", "C", "D", "F"] %}
-        {% for label in tier_labels %}
-            {% set items = tiers.get(label, []) %}
-            <div class="view-tier-row">
-                <div class="view-tier-label tier-label-{{ label | lower }}">{{ label }}</div>
-                <div class="view-tier-items">
-                    {% if items %}
-                        {% for item in items %}
-                            <div class="tier_item">
-                                {% if item.image %}
-                                    <img src="{{ item.image }}" alt="{{ item.name }}" />
-                                {% endif %}
-                                <span class="item-name">{{ item.name }}</span>
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <span class="view-empty">Nothing here</span>
-                    {% endif %}
+    <div class="tierlist-panel">
+        <div class="tierlist-display">
+            {% set tier_labels = ["S", "A", "B", "C", "D", "F"] %}
+            {% for label in tier_labels %}
+                {% set items = tiers.get(label, []) %}
+                <div class="view-tier-row">
+                    <div class="view-tier-label tier-label-{{ label | lower }}">{{ label }}</div>
+                    <div class="view-tier-items">
+                        {% if items %}
+                            {% for item in items %}
+                                <div class="tier_item">
+                                    {% if item.image %}
+                                        <img src="{{ item.image }}" alt="{{ item.name }}" />
+                                    {% endif %}
+                                    <span class="item-name">{{ item.name }}</span>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <span class="view-empty">Nothing here</span>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 
-    <section class="vote-section">
-        <div class="vote-head">
-            <h2>Votes</h2>
-            <p class="muted">Score: <strong>{{ score }}</strong> ({{ upvotes }} up · {{ downvotes }} down)</p>
-        </div>
+    <div class="likes-bar">
         {% if current_user_id %}
-            <form action="{{ url_for('vote_tierlist', id=tierlist_id) }}" method="POST" class="vote-actions">
-                <button type="submit" name="vote" value="up" class="btn vote-btn upvote-btn {% if current_user_vote == 1 %}active{% endif %}">
-                    👍 Upvote
+            <form action="{{ url_for('vote_tierlist', id=tierlist_id) }}" method="POST" class="likes-form">
+                <button type="submit" name="vote" value="up" class="like-btn {% if current_user_vote == 1 %}liked{% endif %}" title="{% if current_user_vote == 1 %}Unlike{% else %}Like{% endif %} this tier list">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="{% if current_user_vote == 1 %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
-                <button type="submit" name="vote" value="down" class="btn vote-btn downvote-btn {% if current_user_vote == -1 %}active{% endif %}">
-                    👎 Downvote
-                </button>
+                <span class="likes-count">{{ upvotes }}</span>
             </form>
         {% else %}
-            <p class="muted">Want to vote? <a href="{{ url_for('login') }}">Log in</a> first.</p>
+            <div class="likes-static">
+                <span class="like-btn like-btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </span>
+                <span class="likes-count">{{ upvotes }}</span>
+                <span class="likes-login-note"><a href="{{ url_for('login') }}">Log in</a> to like</span>
+            </div>
         {% endif %}
-    </section>
+    </div>
 
     <section class="comments-section">
         <div class="comments-head">

@@ -2,14 +2,48 @@
 
 {% block content %}
 
-<section class="hero">
-    <div class="hero-text">
-        <p class="eyebrow">Binghamton Tier Lists</p>
-        <h1>Rank anything. Share everything.</h1>
-        <p class="subhead">Build custom tier lists for clubs, classes, food spots, and more. Save, revisit, and show your friends.</p>
-        <div class="hero-actions">
-            <a href="{{ url_for('create') }}" class="btn hero-btn">Create a Tier List</a>
-            <a href="#gallery" class="text-link">Browse saved lists ↓</a>
+<section class="hero-section">
+    <div class="hero-bg-shapes">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1 class="hero-heading"><span class="hero-accent">Binghamton Tier Lists</span></h1>
+            <p class="hero-sub">Build tier lists for dorms, dining halls, study spots, professors, and more. Share your hot takes with the BU community.</p>
+            <div class="hero-actions">
+                <a href="{{ url_for('create') }}" class="hero-cta">Create a Tier List</a>
+                <a href="#gallery" class="hero-browse">Browse Lists</a>
+            </div>
+        </div>
+        <div class="hero-visual-panel">
+            <div class="hero-tierpreview">
+                <div class="htp-row htp-s"><span>S</span><div class="htp-chips"><div class="htp-chip"></div><div class="htp-chip"></div><div class="htp-chip htp-chip-wide"></div></div></div>
+                <div class="htp-row htp-a"><span>A</span><div class="htp-chips"><div class="htp-chip htp-chip-wide"></div><div class="htp-chip"></div></div></div>
+                <div class="htp-row htp-b"><span>B</span><div class="htp-chips"><div class="htp-chip"></div><div class="htp-chip htp-chip-wide"></div><div class="htp-chip"></div></div></div>
+                <div class="htp-row htp-c"><span>C</span><div class="htp-chips"><div class="htp-chip htp-chip-wide"></div></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-features">
+        <div class="hero-feat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="20" height="11" rx="2"/><path d="M7 9V7a5 5 0 0 1 10 0v2"/><circle cx="12" cy="14" r="1"/></svg>
+            Drag &amp; Drop Builder
+        </div>
+        <div class="hero-feat-divider"></div>
+        <div class="hero-feat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Save &amp; Share
+        </div>
+        <div class="hero-feat-divider"></div>
+        <div class="hero-feat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Like &amp; Comment
+        </div>
+        <div class="hero-feat-divider"></div>
+        <div class="hero-feat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            BU-Themed Templates
         </div>
     </div>
 </section>

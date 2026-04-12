@@ -28,16 +28,17 @@
 </script>
 {% endif %}
 
-<section class="page">
+<section class="page create-page">
     <div class="page-header">
         <div>
             <p class="eyebrow">{% if edit_mode %}Editing{% else %}Builder{% endif %}</p>
             <h1>{% if edit_mode %}Edit Your Tier List{% else %}Create Your Tier List{% endif %}</h1>
             <p class="subhead">Drag items into tiers, add your own entries, then save.</p>
         </div>
-        <button id="saveBtn" class="btn primary">{% if edit_mode %}Save Changes{% else %}Save Tier List{% endif %}</button>
+        <button id="saveBtn" class="btn primary create-save-btn">{% if edit_mode %}Save Changes{% else %}Save Tier List{% endif %}</button>
     </div>
 
+    <div class="tier-board-wrap">
     <div class="tier-board glass">
         <div class="tier_row">
             <div id="tier_S" class="tier_label">S</div>
@@ -61,9 +62,10 @@
         </div>
         <div class="tier_row">
             <div id="tier_F" class="tier_label">F</div>
-            <div id="dropzone_F" class="dropzone"></div>  
+            <div id="dropzone_F" class="dropzone"></div>
         </div>
     </div>
+    </div><!-- end tier-board-wrap -->
 
     <div class="panel">
         <h2 class="panel-title">Item Pool</h2>

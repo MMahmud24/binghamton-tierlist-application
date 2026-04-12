@@ -450,11 +450,10 @@ def vote_tierlist(id):
         return redirect(url_for("login"))
 
     vote_raw = request.form.get("vote", "").strip().lower()
-    if vote_raw not in {"up", "down"}:
+    if vote_raw != "up":
         flash("Invalid vote.", "error")
         return redirect(url_for("view_tierlist", id=tierlist.id))
 
-    vote_value = 1 if vote_raw == "up" else -1
     existing_vote = TierListVote.query.filter_by(
         tierlist_id=tierlist.id,
         user_id=session["user_id"]
@@ -462,16 +461,16 @@ def vote_tierlist(id):
 
     if existing_vote is None:
         db.session.add(TierListVote(
-            value=vote_value,
+            value=1,
             user_id=session["user_id"],
             tierlist_id=tierlist.id,
         ))
-        flash("Vote recorded.", "success")
-    elif existing_vote.value == vote_value:
-        flash("You already cast this vote.", "error")
+    elif existing_vote.value == 1:
+        # Toggle: remove the like
+        db.session.delete(existing_vote)
     else:
-        existing_vote.value = vote_value
-        flash("Vote updated.", "success")
+        # Legacy downvote — convert to like
+        existing_vote.value = 1
 
     db.session.commit()
     return redirect(url_for("view_tierlist", id=tierlist.id))
